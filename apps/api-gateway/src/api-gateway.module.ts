@@ -13,6 +13,7 @@ import { HealthController } from './common/health/health.controller';
 import { RequestContextMiddleware } from './common/middleware/request-context.middleware';
 import { RiverLoggerService } from './common/logger/river-logger.service';
 import { RoutingController } from './modules/routing/routing.controller';
+import { RoutingService } from './modules/routing/routing.service';
 
 @Module({
   controllers: [ApiGatewayController, HealthController, RoutingController],
@@ -20,6 +21,22 @@ import { RoutingController } from './modules/routing/routing.controller';
     ApiGatewayService,
     AppConfigService,
     RiverLoggerService,
+    {
+      provide: RoutingService,
+      useValue: {
+        resolvePrincipal: async () => ({
+          userId: 'demo-user',
+          tenantId: 'demo-tenant',
+          roles: ['user'],
+        }),
+        createSession: async (userId: string, tenantId: string) => ({
+          sessionId: 'session_123',
+          userId,
+          tenantId,
+          createdAt: new Date().toISOString(),
+        }),
+      },
+    },
     {
       provide: APP_INTERCEPTOR,
       useClass: CorrelationInterceptor,
