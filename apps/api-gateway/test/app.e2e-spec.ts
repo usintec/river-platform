@@ -15,10 +15,29 @@ describe('ApiGatewayController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  afterEach(async () => {
+    await app.close();
+  });
+
+  it('/health (GET)', () => {
     return request(app.getHttpServer())
-      .get('/')
+      .get('/health')
       .expect(200)
-      .expect('Hello World!');
+      .expect(({ body }) => {
+        expect(body).toMatchObject({
+          status: 'ok',
+          service: 'api-gateway',
+          environment: expect.any(String),
+        });
+        expect(body.timestamp).toEqual(expect.any(String));
+      });
+  });
+
+  it('adds a request id header when missing', async () => {
+    const response = await request(app.getHttpServer())
+      .get('/health')
+      .expect(200);
+
+    expect(response.headers['x-request-id']).toEqual(expect.any(String));
   });
 });
