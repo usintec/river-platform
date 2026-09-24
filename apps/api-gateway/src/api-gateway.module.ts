@@ -12,7 +12,6 @@ import { CorrelationInterceptor } from './common/interceptors/correlation.interc
 import { HealthController } from './common/health/health.controller';
 import { RequestContextMiddleware } from './common/middleware/request-context.middleware';
 import { RiverLoggerService } from './common/logger/river-logger.service';
-import { SessionService } from './modules/sessions/session.service';
 import { RoutingController } from './modules/routing/routing.controller';
 
 @Module({
@@ -21,7 +20,6 @@ import { RoutingController } from './modules/routing/routing.controller';
     ApiGatewayService,
     AppConfigService,
     RiverLoggerService,
-    SessionService,
     {
       provide: APP_INTERCEPTOR,
       useClass: CorrelationInterceptor,

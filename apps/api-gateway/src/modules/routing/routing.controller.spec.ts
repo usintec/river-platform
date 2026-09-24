@@ -1,10 +1,8 @@
 import { RoutingController } from './routing.controller';
-import { SessionService } from '../sessions/session.service';
 
 describe('RoutingController', () => {
-  it('creates a session for a supplied principal', () => {
-    const sessionService = new SessionService();
-    const controller = new RoutingController(sessionService);
+  it('returns identity context for a supplied principal', () => {
+    const controller = new RoutingController();
     const request = {
       user: {
         userId: 'demo-user',
@@ -12,11 +10,10 @@ describe('RoutingController', () => {
       },
     };
 
-    const result = controller.getSession(request as any);
+    const result = controller.getIdentityContext(request as any);
 
     expect(result.status).toBe('ok');
-    expect(result.session.userId).toBe('demo-user');
-    expect(result.session.tenantId).toBe('demo-tenant');
+    expect(result.source).toBe('identity-service');
     expect(result.principal).toMatchObject({
       userId: 'demo-user',
       tenantId: 'demo-tenant',
@@ -24,16 +21,14 @@ describe('RoutingController', () => {
   });
 
   it('uses identity-service defaults when no principal is present', () => {
-    const sessionService = new SessionService();
-    const controller = new RoutingController(sessionService);
+    const controller = new RoutingController();
 
-    const result = controller.getSession({} as any);
+    const result = controller.getIdentityContext({} as any);
 
     expect(result.principal).toMatchObject({
       userId: 'identity-service-user',
       tenantId: 'identity-service-tenant',
     });
-    expect(result.session.userId).toBe('identity-service-user');
-    expect(result.session.tenantId).toBe('identity-service-tenant');
+    expect(result.source).toBe('identity-service');
   });
 });

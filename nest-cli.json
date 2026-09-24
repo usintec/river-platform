@@ -19,6 +19,15 @@
         "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
       }
     },
+    "identity-service": {
+      "type": "application",
+      "root": "apps/identity-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/identity-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/identity-service/tsconfig.app.json"
+      }
+    },
     "river-platform": {
       "type": "application",
       "root": "apps/river-platform",
@@ -26,6 +35,15 @@
       "sourceRoot": "apps/river-platform/src",
       "compilerOptions": {
         "tsConfigPath": "apps/river-platform/tsconfig.app.json"
+      }
+    },
+    "session-service": {
+      "type": "application",
+      "root": "apps/session-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/session-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/session-service/tsconfig.app.json"
       }
     }
   }
