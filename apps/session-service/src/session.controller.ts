@@ -14,7 +14,7 @@ export class SessionController {
   }
 
   @Post('refresh')
-  refresh(@Body() dto: TokenDto) {
+  refresh(@Body() dto: any) {
     return this.sessions.refresh(dto.refreshToken);
   }
 

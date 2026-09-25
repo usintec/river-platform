@@ -22,12 +22,12 @@ export class AuthController {
   }
 
   @Post('refresh')
-  refresh(@Body() body: RefreshDto) {
+  refresh(@Body() body: any) {
     return this.auth.refresh(body.refreshToken);
   }
 
   @Post('logout')
-  logout(@Body() body: RefreshDto) {
+  logout(@Body() body: any) {
     return this.auth.logout(body.refreshToken);
   }
 }
