@@ -1,19 +1,21 @@
-import { IdentityServiceService } from './identity.service';
+import { BadRequestException } from '@nestjs/common';
+import { IdentityService } from './identity.service';
 
-describe('IdentityServiceService', () => {
-  it('verifies a valid token and returns a principal', () => {
-    const service = new IdentityServiceService();
+describe('IdentityService', () => {
+  const service = new IdentityService({} as never);
 
-    expect(service.verifyToken('valid-token')).toMatchObject({
-      userId: 'demo-user',
-      tenantId: 'demo-tenant',
-      roles: ['user'],
-    });
+  it('rejects a create request without an email', async () => {
+    await expect(
+      service.createUser({
+        password: 'long-enough-password',
+        displayName: 'Test User',
+      } as never),
+    ).rejects.toBeInstanceOf(BadRequestException);
   });
 
-  it('rejects an invalid token', () => {
-    const service = new IdentityServiceService();
-
-    expect(() => service.verifyToken('invalid-token')).toThrow('Invalid or expired token');
+  it('rejects credential verification without an email', async () => {
+    await expect(
+      service.verifyCredentials({ password: 'long-enough-password' } as never),
+    ).rejects.toBeInstanceOf(BadRequestException);
   });
 });

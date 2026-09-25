@@ -1,5 +1,9 @@
 import {
-  ConflictException, Injectable, NotFoundException, UnauthorizedException,
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from './prisma.service';
@@ -10,6 +14,10 @@ export class IdentityService {
   constructor(private readonly prisma: PrismaService) {}
 
   async createUser(dto: CreateUserDto) {
+    if (!dto?.email || !dto.password || !dto.displayName) {
+      throw new BadRequestException('email, password, and displayName are required');
+    }
+
     const email = dto.email.toLowerCase().trim();
     const exists = await this.prisma.user.findUnique({ where: { email } });
     if (exists) throw new ConflictException('Email is already registered');
@@ -24,6 +32,10 @@ export class IdentityService {
   }
 
   async verifyCredentials(dto: VerifyCredentialsDto) {
+    if (!dto?.email || !dto.password) {
+      throw new BadRequestException('email and password are required');
+    }
+
     const email = dto.email.toLowerCase().trim();
     const user = await this.prisma.user.findUnique({ where: { email } });
 

@@ -6,6 +6,6 @@ async function bootstrap() {
   const app = await NestFactory.create(ApiGatewayModule);
   app.setGlobalPrefix('');
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
-  await app.listen(process.env.port ?? 3000);
+  await app.listen(Number(process.env.PORT ?? 3000));
 }
 bootstrap();

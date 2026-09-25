@@ -9,12 +9,12 @@ export class IdentityController {
   constructor(private readonly identity: IdentityService) {}
 
   @Post('users')
-  createUser(@Body() dto: CreateUserDto) {
+  createUser(@Body() dto: any) {
     return this.identity.createUser(dto);
   }
 
   @Post('auth/verify')
-  verify(@Body() dto: VerifyCredentialsDto) {
+  verify(@Body() dto: any) {
     return this.identity.verifyCredentials(dto);
   }
 

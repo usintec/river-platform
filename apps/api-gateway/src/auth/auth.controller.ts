@@ -8,13 +8,13 @@ export class AuthController {
   constructor(private readonly auth: AuthService) {}
 
   @Post('register')
-  register(@Body() body: RegisterDto) {
+  register(@Body() body: any) {
     return this.auth.register(body);
   }
 
   @Post('login')
   login(
-    @Body() body: LoginDto,
+    @Body() body: any,
     @Headers('user-agent') userAgent: string | undefined,
     @Req() req: Request,
   ) {
