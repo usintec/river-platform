@@ -1,4 +1,4 @@
-import { IdentityServiceService } from './identity-service.service';
+import { IdentityServiceService } from './identity.service';
 
 describe('IdentityServiceService', () => {
   it('verifies a valid token and returns a principal', () => {
