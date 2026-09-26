@@ -1,0 +1,22 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+enum ExecutionStatus { QUEUED RUNNING SUCCEEDED FAILED CANCELLED TIMED_OUT }
+model AgentExecution {
+  id String @id @default(uuid())
+  userId String
+  sessionId String?
+  agent String
+  status ExecutionStatus @default(QUEUED)
+  input Json
+  output Json?
+  error Json?
+  correlationId String
+  parentTaskId String?
+  startedAt DateTime?
+  completedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([userId, createdAt])
+  @@index([status, createdAt])
+  @@index([correlationId])
+}

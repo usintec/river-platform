@@ -10,6 +10,15 @@
   "monorepo": true,
   "root": "apps/river-platform",
   "projects": {
+    "agent-runtime": {
+      "type": "application",
+      "root": "apps/agent-runtime",
+      "entryFile": "main",
+      "sourceRoot": "apps/agent-runtime/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/agent-runtime/tsconfig.app.json"
+      }
+    },
     "api-gateway": {
       "type": "application",
       "root": "apps/api-gateway",
